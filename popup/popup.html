@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Recruiter Mail Bot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📧 Recruiter Mail Bot</h1>
+      <p class="subtitle">Personalized Email Automation</p>
+    </header>
+    <div class="tabs">
+      <button class="tab active" data-tab="compose">Compose</button>
+      <button class="tab" data-tab="logs">Logs</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+    <div class="tab-content active" id="compose">
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-label">Today:</span>
+          <span class="stat-value" id="todaySent">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Total:</span>
+          <span class="stat-value" id="totalSent">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Queue:</span>
+          <span class="stat-value" id="queueCount">0</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>📋 Import Recruiter List (CSV)</label>
+        <input type="file" id="csvFile" accept=".csv" />
+        <small>Format: name,email,company,jobTitle</small>
+      </div>
+      <div class="form-group">
+        <label>📝 Email Template</label>
+        <input type="text" id="subjectTemplate" placeholder="Subject: Application for {{jobTitle}} at {{company}}" value="Application for {{jobTitle}} at {{company}}" />
+        <textarea id="bodyTemplate" rows="6">Dear {{name}},
+
+I am writing to express my interest in the {{jobTitle}} position at {{company}}.
+
+With my background in software development, I believe I would be a great fit for your team.
+
+Please find my resume attached for your review.
+
+Best regards</textarea>
+      </div>
+      <div class="button-group">
+        <button id="startBtn" class="btn btn-primary">▶ Start</button>
+        <button id="pauseBtn" class="btn btn-secondary" disabled>⏸ Pause</button>
+      </div>
+      <div id="progressSection" class="progress-section" style="display:none;">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">Processing...</p>
+      </div>
+    </div>
+    <div class="tab-content" id="logs">
+      <div class="logs-header">
+        <h3>📊 Email History</h3>
+        <button id="clearLogsBtn" class="btn btn-small">Clear</button>
+      </div>
+      <div id="logsList" class="logs-list"></div>
+    </div>
+    <div class="tab-content" id="settings">
+      <div class="form-group">
+        <label>Daily Email Limit</label>
+        <input type="number" id="dailyLimit" value="20" min="1" max="50" />
+      </div>
+      <div class="form-group">
+        <label>Delay Between Emails (seconds)</label>
+        <div class="range-inputs">
+          <input type="number" id="minDelay" value="30" />
+          <span>to</span>
+          <input type="number" id="maxDelay" value="60" />
+        </div>
+      </div>
+      <div class="form-group checkbox">
+        <input type="checkbox" id="requireReview" checked />
+        <label for="requireReview">Require manual review before sending</label>
+      </div>
+      <div class="form-group">
+        <label>🤖 AI API Key (Optional)</label>
+        <input type="password" id="apiKey" placeholder="Gemini API key" />
+        <div class="checkbox">
+          <input type="checkbox" id="aiEnabled" />
+          <label for="aiEnabled">Enable AI enhancement</label>
+        </div>
+      </div>
+      <button id="saveSettingsBtn" class="btn btn-primary">💾 Save Settings</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
